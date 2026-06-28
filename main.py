@@ -1,33 +1,22 @@
-import tkinter as tk
+import webview
 from clicker import start, stop
 
-root = tk.Tk()
-root.title("Tap - The next gen AutoClicker")
-root.geometry("400x380")
-root.resizable(False, False)
+class Api:
+    def start_clicker(self, cps, button):
+        start(int(cps), button)
 
-tk.Label(root, text="Clicks per second").pack(pady=10)
+    def stop_clicker(self):
+        stop()
 
-cps = tk.IntVar(value=10)
-side = tk.StringVar(value="left")
+api = Api()
 
-tk.Entry(root, textvariable=cps, justify="center").pack()
+webview.create_window(
+    'Tap', 
+    'ui/index.html',
+    js_api=api,
+    width=500,
+    height=600,
+    resizable=False
+)
 
-status = tk.Label(root, text="Stopped", fg="red")
-status.pack(pady=10)
-
-def start_clicker():
-    start(cps.get(), side.get())
-    status.config(text="Runnig", fg="green")
-
-def stop_clicker():
-    stop()
-    status.config(text="Stopped", fg="red")
-
-tk.Radiobutton(root, text="Left", variable=side, value="left").pack(fill="x", padx=30)
-tk.Radiobutton(root, text="Right", variable=side, value="right").pack(fill="x", padx=30)
-
-tk.Button(root, text="Start", command=start_clicker).pack(fill="x", padx=30)
-tk.Button(root, text="Stop", command=stop_clicker).pack(fill="x", padx=30, pady=5)
-
-root.mainloop()
+webview.start()
