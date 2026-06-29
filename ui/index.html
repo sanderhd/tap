@@ -4,34 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tap - The Next Gen AutoClicker</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="card">
-            <h1>Tap</h1>
+<body class="bg-black min-h-screen flex items-center justify-center text-zinc-100">
+    <div class="w-80">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-lg font-semibold tracking-tight">tap</h1>
+                <span class="text-xs text-zinc-500" id="status">idle</span>
+            </div>
 
-            <label>Clicks per second</label>
-            <input id="cps" type="number" value="10">
+            <div class="mb-5">
+                <label class="block text-xs text-zinc-500 mb-2 uppercase tracking-wider">Clicks / sec</label>
+                <input
+                    id="cps"
+                    type="number"
+                    value="10"
+                    class="w-full bg-black text-zinc-100 border border-zinc-800 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-zinc-500 transition-colors"
+                >
+            </div>
 
-            <br><br>
+            <div class="mb-6">
+                <label class="block text-xs text-zinc-500 mb-2 uppercase tracking-wider">Button</label>
 
-            <label>
-                <input type="radio" name="button" value="left" checked>
-                Left
-            </label>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="relative">
+                        <input type="radio" name="button" value="left" checked class="peer sr-only">
+                        <div class="text-center text-sm py-2 rounded-md border border-zinc-800 text-zinc-500 cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
+                            Left
+                        </div>
+                    </label>
+                    <label class="relative">
+                        <input type="radio" name="button" value="right" class="peer sr-only">
+                        <div class="text-center text-sm py-2 rounded-md border border-zinc-800 text-zinc-500 cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
+                            Right
+                        </div>
+                    </label>
+                </div>
+            </div>
 
-            <label>
-                <input type="radio" name="button" value="right">
-                Right
-            </label>
+            <div class="grid grid-cols-2 gap-2">
+                <button
+                    id="start"
+                    class="bg-zinc-100 text-black text-sm font-medium py-2 rounded-md hover:bg-zinc-300 transition-colors"
+                >
+                    Start
+                </button>
 
-            <br><br>
-
-            <button id="start">Start</button>
-            <button id="stop">Stop</button>
+                <button
+                    id="stop"
+                    class="bg-zinc-900 text-zinc-100 text-sm font-medium py-2 rounded-md border border-zinc-800 hover:bg-zinc-800 transition-colors"
+                >
+                    Stop
+                </button>
+            </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
