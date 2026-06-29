@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -58,14 +59,14 @@ jobs:
         env:
           VERSION: ${{ github.event.inputs.version }}
         run: |
-          ARCH="${{ runner.arch }}"
+          ARCH=$(echo "${{ runner.arch }}" | tr '[:upper:]' '[:lower:]')
           mkdir -p release
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            cp dist/Tap.exe release/tap-windows-${ARCH,,}-${VERSION}.exe
+            cp dist/Tap.exe "release/tap-windows-${ARCH}-${VERSION}.exe"
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
-            cp dist/Tap release/tap-linux-${ARCH,,}-${VERSION}
+            cp dist/Tap "release/tap-linux-${ARCH}-${VERSION}"
           elif [[ "$RUNNER_OS" == "macOS" ]]; then
-            cp dist/Tap release/tap-macos-${ARCH,,}-${VERSION}
+            cp dist/Tap "release/tap-macos-${ARCH}-${VERSION}"
           fi
       - name: Upload artifact
         uses: actions/upload-artifact@v4
