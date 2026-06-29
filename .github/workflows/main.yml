@@ -41,11 +41,11 @@ jobs:
           echo "APP_NAME=Tap" >> $GITHUB_ENV
 
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            echo "ICON=ui/tap.png" >> $GITHUB_ENV
+            echo "ICON=ui/icon.ico" >> $GITHUB_ENV
           elif [[ "$RUNNER_OS" == "macOS" ]]; then
-            echo "ICON=ui/tap.png" >> $GITHUB_ENV
+            echo "ICON=ui/icon.icns" >> $GITHUB_ENV
           else
-            echo "ICON=ui/tap.png" >> $GITHUB_ENV
+            echo "ICON=ui/icon.png" >> $GITHUB_ENV
           fi
 
       - name: Build executable (PyInstaller)
