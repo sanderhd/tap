@@ -18,75 +18,101 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
+        .drag {
+            -webkit-app-region: drag;
+        }
+        button {
+            -webkit-app-region: no-drag;
+        }
     </style>
 </head>
-<body class="bg-black min-h-screen flex items-center justify-center text-zinc-100">
-    <div class="w-80">
-        <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-6">
-            <div class="flex items-center justify-between mb-8">
-                <h1 class="text-lg font-semibold tracking-tight">tap</h1>
-                <span class="text-xs text-zinc-500" id="status">idle</span>
-            </div>
+<body class="bg-black min-h-screen flex flex-col text-zinc-100 selection:bg-zinc-800">
+    
+    <div class="w-full flex justify-between items-center px-4 py-3 border-b border-zinc-900 bg-black drag">
+        <div class="text-xs text-zinc-400">tap</div>
+        
+        <div class="flex gap-4">
+            <button onclick="window.pywebview.api.minimize()" class="text-zinc-500 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+            </button>
 
-            <div class="mb-5">
-                <label class="block text-xs text-zinc-500 mb-2 uppercase tracking-wider">Clicks / sec</label>
-                <input
-                    id="cps"
-                    type="number"
-                    value="10"
-                    class="w-full bg-black text-zinc-100 border border-zinc-800 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-zinc-500 transition-colors"
-                >
-            </div>
+            <button onclick="window.pywebview.api.close()" class="text-red-500 hover:text-red-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+    </div>    
 
-            <div class="mb-6">
-                <label class="block text-xs text-zinc-500 mb-2 uppercase tracking-wider">Button</label>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <label class="relative">
-                        <input type="radio" name="button" value="left" checked class="peer sr-only">
-                        <div class="text-center text-sm py-2 rounded-md border border-zinc-800 text-zinc-500 cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
-                            Left
-                        </div>
-                    </label>
-                    <label class="relative">
-                        <input type="radio" name="button" value="right" class="peer sr-only">
-                        <div class="text-center text-sm py-2 rounded-md border border-zinc-800 text-zinc-500 cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
-                            Right
-                        </div>
-                    </label>
+    <div class="flex-1 flex items-center justify-center p-6">
+        <div class="w-full max-w-[340px]">
+            <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6 shadow-2xl">
+                
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-lg font-medium tracking-tight">tap</h1>
+                    <span class="text-xs text-zinc-500" id="status">idle</span>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-2 gap-2">
-                <button
-                    id="start"
-                    class="bg-zinc-100 text-black text-sm font-medium py-2 rounded-md hover:bg-zinc-300 transition-colors"
-                >
-                    Start
-                </button>
+                <div class="mb-5">
+                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">Clicks / sec</label>
+                    <input
+                        id="cps"
+                        type="number"
+                        value="10"
+                        class="w-full bg-black text-zinc-100 border border-zinc-900 rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-zinc-700 transition-colors"
+                    >
+                </div>
 
-                <button
-                    id="stop"
-                    class="bg-zinc-900 text-zinc-100 text-sm font-medium py-2 rounded-md border border-zinc-800 hover:bg-zinc-800 transition-colors"
-                >
-                    Stop
-                </button>
-            </div>
+                <div class="mb-5">
+                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">Button</label>
 
-            <div class="mb-6">
-                <label class="block text-xs text-zinc-500 mb-2 uppercase tracking-wider">
-                    Hotkey
-                </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="relative block">
+                            <input type="radio" name="button" value="left" checked class="peer sr-only">
+                            <div class="text-center text-xs py-2.5 rounded-lg border border-zinc-900 text-zinc-500 font-medium cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
+                                Left
+                            </div>
+                        </label>
+                        <label class="relative block">
+                            <input type="radio" name="button" value="right" class="peer sr-only">
+                            <div class="text-center text-xs py-2.5 rounded-lg border border-zinc-900 text-zinc-500 font-medium cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
+                                Right
+                            </div>
+                        </label>
+                    </div>
+                </div>
 
-                <button
-                    id="bind"
-                    class="w-full text-sm py-2 rounded-md border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-500 transition-colors"
-                >
-                    Press to bind (F6)
-                </button>
+                <div class="grid grid-cols-2 gap-2 mb-5">
+                    <button
+                        id="start"
+                        class="bg-zinc-100 text-black text-xs font-semibold py-2.5 rounded-lg hover:bg-zinc-200 transition-all duration-200"
+                    >
+                        Start
+                    </button>
+
+                    <button
+                        id="stop"
+                        class="bg-zinc-900 text-zinc-100 text-xs font-semibold py-2.5 rounded-lg border border-zinc-800 hover:bg-zinc-800 transition-all duration-200"
+                    >
+                        Stop
+                    </button>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">
+                        Hotkey
+                    </label>
+
+                    <button
+                        id="bind"
+                        class="w-full text-xs py-2.5 rounded-lg border border-zinc-900 text-cyan-400 bg-black/40 hover:border-zinc-700 transition-colors"
+                    >
+                        Press to bind (F6)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

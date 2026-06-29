@@ -13,7 +13,7 @@ function setRunningState(isRunning) {
         statusEl.classList.add('text-green-400');
 
         startBtn.disabled = true;
-        startBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        startBtn.classList.add('opacity-30', 'cursor-not-allowed');
 
         stopBtn.disabled = false;
         stopBtn.classList.remove('opacity-40', 'cursor-not-allowed');
@@ -23,7 +23,7 @@ function setRunningState(isRunning) {
         statusEl.classList.add('text-zinc-500');
 
         startBtn.disabled = false;
-        startBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        startBtn.classList.remove('opacity-30', 'cursor-not-allowed');
 
         stopBtn.disabled = true;
         stopBtn.classList.add('opacity-40', 'cursor-not-allowed');

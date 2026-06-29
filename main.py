@@ -64,6 +64,12 @@ class Api:
         hotkey = parse_key(key)
         print(f"[hotkey] set to {key}")
 
+    def minimize(self):
+        webview.windows[0].minimize()
+    
+    def close(self):
+        webview.windows[0].destroy()
+
 api = Api()
 start_hotkey_listener()
 
@@ -73,7 +79,8 @@ webview.create_window(
     js_api=api,
     width=500,
     height=600,
-    resizable=False
+    resizable=False,
+    frameless=True
 )
 
 webview.start()
