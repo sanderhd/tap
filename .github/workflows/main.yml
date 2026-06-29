@@ -40,6 +40,12 @@ jobs:
           else
             echo "ICON=ui/icon.png" >> $GITHUB_ENV
           fi
+      - name: Write version file
+        shell: bash
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          echo "{\"version\": \"${VERSION}\"}" > ui/version.json
       - name: Build executable (PyInstaller)
         shell: bash
         run: |

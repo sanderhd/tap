@@ -1,6 +1,6 @@
 [Setup]
 AppName=Tap
-AppVersion=1.0
+AppVersion=0.0.8
 DefaultDirName={autopf}\Tap
 DefaultGroupName=Tap
 OutputDir=installer_output

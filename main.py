@@ -1,6 +1,10 @@
 import webview
 import threading
 from pynput import keyboard
+import webbrowser
+import json
+import os
+import sys
 
 from clicker import start, stop
 
@@ -10,6 +14,11 @@ listener = None
 current_cps = 10
 current_button = "left"
 running_hotkey = False
+
+def resouce_path(relative_path):
+    """Works in dev and PyInstaller --onefile build"""
+    base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 def toggle_clicker():
     global running_hotkey
@@ -69,6 +78,16 @@ class Api:
     
     def close(self):
         webview.windows[0].destroy()
+
+    def get_version(self):
+        try:
+            with open(resouce_path("ui/version.json"), "r") as f:
+                return json.load(f)["version"]
+        except Exception:
+            return "dev"
+        
+    def open_url(self, url):
+        webbrowser.open(url)
 
 api = Api()
 start_hotkey_listener()
