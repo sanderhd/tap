@@ -5,11 +5,13 @@ from pynput.mouse import Controller, Button
 mouse = Controller()
 
 running = False
+current_cps = 10
+current_button = "left"
 
 def click_loop(cps, button):
     global running
 
-    delay = 1 / cps
+    delay = 1 / max(cps, 1)
 
     if button == "left":
         btn = Button.left
@@ -21,13 +23,21 @@ def click_loop(cps, button):
         time.sleep(delay)
 
 def start(cps, button):
-    global running
+    global running, current_cps, current_button
 
     if running:
         return
-    
+
+    current_cps = cps
+    current_button = button
+
     running = True
-    threading.Thread(target=click_loop, args=(cps, button), daemon=True).start()
+
+    threading.Thread(
+        target=click_loop,
+        args=(cps, button),
+        daemon=True
+    ).start()
 
 def stop():
     global running
