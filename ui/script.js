@@ -35,7 +35,7 @@ function compareVersions(a, b) {
     const pa = a.replace(/^v/, "").split(".").map(Number);
     const pb = b.replace(/^v/, "").split(".").map(Number);
 
-    for (let i = 0; i < Math.max(pa.lenght, pb.lenght); i++) {
+    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
         const na = pa[i] || 0;
         const nb = pb[i] || 0;
         if (na > nb) return 1;
@@ -47,7 +47,7 @@ function compareVersions(a, b) {
 
 async function checkForUpdate(currentVersion) {
     try {
-        const res = await fetch(`https://api.github.com/repos${repo}/releases/latest`);
+        const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
         if (!res.ok) return;
         const data = await res.json();
         const latest = data.tag_name;
@@ -77,6 +77,14 @@ function showUpdateNotice(latestVersion, url) {
         window.pywebview.api.open_url(url);
     });
 }
+
+window.addEventListener("pywebviewready", async () => {
+    console.log("pywebviewready fired");
+    const version = await window.pywebview.api.get_version();
+    console.log("version from api:", version);
+    document.getElementById("version").textContent = version;
+    checkForUpdate(version);
+});
 
 window.addEventListener("pywebviewready", async () => {
     const version = await window.pywebview.api.get_version();
