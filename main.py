@@ -73,6 +73,11 @@ class Api:
         hotkey = parse_key(key)
         print(f"[hotkey] set to {key}")
 
+    def set_cps(self, cps):
+        global current_cps
+        
+        current_cps = int(cps)
+
     def minimize(self):
         webview.windows[0].minimize()
     
@@ -105,4 +110,4 @@ webview.create_window(
     frameless=True
 )
 
-webview.start()
+webview.start(debug=True)

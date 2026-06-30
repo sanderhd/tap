@@ -98,6 +98,10 @@ window.addEventListener("pywebviewready", async () => {
     checkForUpdate(version);
 });
 
+cpsInput.addEventListener("input", async () => {
+    await window.pywebview.api.set_cps(parseInt(cpsInput.value));
+})
+
 startBtn.addEventListener("click", async () => {
     const cps = cpsInput.value;
     const button = document.querySelector(

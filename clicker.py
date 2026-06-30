@@ -26,7 +26,8 @@ def start(cps, button):
     global running, current_cps, current_button
 
     if running:
-        return
+        stop()
+        time.sleep(0.05)
 
     current_cps = cps
     current_button = button
