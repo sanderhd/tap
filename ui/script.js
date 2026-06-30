@@ -61,6 +61,19 @@ async function checkForUpdate(currentVersion) {
     }
 }
 
+async function togglePin() {
+    const pinned = await window.pywebview.api.toggle_on_top();
+    const btn = document.getElementById("pin-btn");
+
+    if (pinned) {
+        btn.classList.remove("text-zinc-500");
+        btn.classList.add("text-orange-400");
+    } else {
+        btn.classList.remove("text-orange-400");
+        btn.classList.add("text-zinc-500")
+    }
+}
+
 async function pollStatus() {
     try {
         const isRunning = await window.pywebview.api.get_status();

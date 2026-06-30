@@ -2,6 +2,8 @@ import webview
 import threading
 from pynput import keyboard
 import webbrowser
+import ctypes
+import ctypes.wintypes
 import json
 import os
 import sys
@@ -10,6 +12,7 @@ from clicker import start, stop
 
 hotkey = keyboard.Key.f6
 listener = None
+pinned = False
 
 current_cps = 10
 current_button = "left"
@@ -86,6 +89,16 @@ class Api:
 
     def get_status(self):
         return running_hotkey
+    
+    def toggle_on_top(self):
+        global pinned
+        pinned = not pinned
+        
+        win = webview.windows[0]
+        i = win.gui.BrowserView.instances.get(win.uid)
+        i.Invoke(win.gui.Func[win.gui.Object](lambda: win.gui.set_on_top(win.uid, pinned)))
+        
+        return pinned
 
     def get_version(self):
         try:
