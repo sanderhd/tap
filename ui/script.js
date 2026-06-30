@@ -6,6 +6,7 @@ const cpsInput = document.getElementById('cps');
 
 let listeningForKey = false;
 const repo = "sanderhd/tap"
+let pollInterval = null;
 
 function setRunningState(isRunning) {
     if (isRunning) {
@@ -60,6 +61,19 @@ async function checkForUpdate(currentVersion) {
     }
 }
 
+async function pollStatus() {
+    try {
+        const isRunning = await window.pywebview.api.get_status();
+        setRunningState(isRunning);
+    } catch (e) {
+        console.warn("Status poll failed:", e)
+    }
+}
+
+window.addEventListener("pywebviewready", () => {
+    pollInterval = setInterval(pollStatus, 200);
+})
+
 function showUpdateNotice(latestVersion, url) {
     const versionEl = document.getElementById("version");
     versionEl.innerHTML = `
@@ -77,14 +91,6 @@ function showUpdateNotice(latestVersion, url) {
         window.pywebview.api.open_url(url);
     });
 }
-
-window.addEventListener("pywebviewready", async () => {
-    console.log("pywebviewready fired");
-    const version = await window.pywebview.api.get_version();
-    console.log("version from api:", version);
-    document.getElementById("version").textContent = version;
-    checkForUpdate(version);
-});
 
 window.addEventListener("pywebviewready", async () => {
     const version = await window.pywebview.api.get_version();

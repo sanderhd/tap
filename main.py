@@ -79,6 +79,9 @@ class Api:
     def close(self):
         webview.windows[0].destroy()
 
+    def get_status(self):
+        return running_hotkey
+
     def get_version(self):
         try:
             with open(resouce_path("ui/version.json"), "r") as f:
