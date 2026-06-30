@@ -10,36 +10,69 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #09090b;
+            --card: #09090b;
+            --border: #18181b;
+            --text: #f4f4f5;
+            --text-muted: #71717a;
+            --accent: #f4f4f5;
+            --accent-fg: #09090b;
+            --input-bg: #000000;
+        }
+
         body {
             font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg) !important;
+            color: var(--text) !important;
+            position: relative;
+            overflow: hidden;
         }
+
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        .drag {
-            -webkit-app-region: drag;
-        }
-        button {
-            -webkit-app-region: no-drag;
-        }
+        .drag { -webkit-app-region: drag; }
+        button { -webkit-app-region: no-drag; }
+
+        .t-bg      { background-color: var(--bg) !important; }
+        .t-card    { background-color: var(--card) !important; border-color: var(--border) !important; }
+        .t-input   { background-color: var(--input-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        .t-border  { border-color: var(--border) !important; }
+        .t-text    { color: var(--text) !important; }
+        .t-muted   { color: var(--text-muted) !important; }
+        .t-accent  { background-color: var(--accent) !important; color: var(--accent-fg) !important; }
+        .t-stop    { background-color: var(--input-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        .t-topbar  { background-color: var(--bg) !important; border-color: var(--border) !important; }
+        .t-panel   { background-color: var(--card) !important; }
+
+        /* radio checked state via CSS var */
+        .radio-opt { border-color: var(--border); color: var(--text-muted); }
+        input[type="radio"]:checked + .radio-opt { border-color: var(--accent) !important; color: var(--text) !important; }
     </style>
 </head>
-<body class="bg-black min-h-screen flex flex-col text-zinc-100 selection:bg-zinc-800">
-    
-    <div class="w-full flex justify-between items-center px-4 py-3 border-b border-zinc-900 bg-black drag">
-        <div class="text-xs text-zinc-400">tap</div>
-        
+<body class="min-h-screen flex flex-col selection:bg-zinc-800">
+
+    <div class="t-topbar w-full flex justify-between items-center px-4 py-3 border-b drag">
+        <div class="text-xs t-muted">tap</div>
+
         <div class="flex gap-4">
-            <button onclick="togglePin()" id="pin-btn" class="text-zinc-500 hover:text-white transition-colors">
+            <button onclick="toggleSettings()" class="t-muted hover:t-text transition-colors" style="color: var(--text-muted)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+            </button>
+
+            <button onclick="togglePin()" id="pin-btn" class="transition-colors" style="color: var(--text-muted)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
                 </svg>
             </button>
 
-            <button onclick="window.pywebview.api.minimize()" class="text-zinc-500 hover:text-white transition-colors">
+            <button onclick="window.pywebview.api.minimize()" class="transition-colors" style="color: var(--text-muted)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
             </button>
 
@@ -47,82 +80,114 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
-    </div>    
+    </div>
 
     <div class="flex-1 flex items-center justify-center p-6">
         <div class="flex flex-col items-center gap-4">
             <div class="w-full max-w-[340px]">
-                <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6 shadow-2xl">
+                <div class="t-card border rounded-2xl p-6 shadow-2xl">
 
-                <div class="flex items-center justify-between mb-6">
-                    <h1 class="text-lg font-medium tracking-tight">tap</h1>
-                    <span class="text-xs text-zinc-500" id="status">idle</span>
-                </div>
-
-                <div class="mb-5">
-                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">Clicks / sec</label>
-                    <input
-                        id="cps"
-                        type="number"
-                        value="10"
-                        min="0"
-                        class="w-full bg-black text-zinc-100 border border-zinc-900 rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none focus:border-zinc-700 transition-colors"
-                    >
-                </div>
-
-                <div class="mb-5">
-                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">Button</label>
-
-                    <div class="grid grid-cols-2 gap-2">
-                        <label class="relative block">
-                            <input type="radio" name="button" value="left" checked class="peer sr-only">
-                            <div class="text-center text-xs py-2.5 rounded-lg border border-zinc-900 text-zinc-500 font-medium cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
-                                Left
-                            </div>
-                        </label>
-                        <label class="relative block">
-                            <input type="radio" name="button" value="right" class="peer sr-only">
-                            <div class="text-center text-xs py-2.5 rounded-lg border border-zinc-900 text-zinc-500 font-medium cursor-pointer peer-checked:border-zinc-100 peer-checked:text-zinc-100 transition-colors">
-                                Right
-                            </div>
-                        </label>
+                    <div class="flex items-center justify-between mb-6">
+                        <h1 class="text-lg font-medium tracking-tight t-text">tap</h1>
+                        <span class="text-xs t-muted" id="status" style="color: var(--text-muted)">idle</span>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-2 gap-2 mb-5">
-                    <button
-                        id="start"
-                        class="bg-zinc-100 text-black text-xs font-semibold py-2.5 rounded-lg hover:bg-zinc-200 transition-all duration-200"
-                    >
-                        Start
-                    </button>
+                    <div class="mb-5">
+                        <label class="block text-[10px] font-medium t-muted mb-2 uppercase tracking-widest" style="color: var(--text-muted)">Clicks / sec</label>
+                        <input
+                            id="cps"
+                            type="number"
+                            value="10"
+                            min="0"
+                            class="t-input w-full border rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none transition-colors"
+                        >
+                    </div>
 
-                    <button
-                        id="stop"
-                        class="bg-zinc-900 text-zinc-100 text-xs font-semibold py-2.5 rounded-lg border border-zinc-800 hover:bg-zinc-800 transition-all duration-200"
-                    >
-                        Stop
-                    </button>
-                </div>
+                    <div class="mb-5">
+                        <label class="block text-[10px] font-medium t-muted mb-2 uppercase tracking-widest" style="color: var(--text-muted)">Button</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="relative block">
+                                <input type="radio" name="button" value="left" checked class="peer sr-only">
+                                <div class="radio-opt text-center text-xs py-2.5 rounded-lg border font-medium cursor-pointer transition-colors">Left</div>
+                            </label>
+                            <label class="relative block">
+                                <input type="radio" name="button" value="right" class="peer sr-only">
+                                <div class="radio-opt text-center text-xs py-2.5 rounded-lg border font-medium cursor-pointer transition-colors">Right</div>
+                            </label>
+                        </div>
+                    </div>
 
-                <div>
-                    <label class="block text-[10px] font-medium text-zinc-500 mb-2 uppercase tracking-widest">
-                        Hotkey
-                    </label>
+                    <div class="grid grid-cols-2 gap-2 mb-5">
+                        <button id="start" class="t-accent text-xs font-semibold py-2.5 rounded-lg transition-all duration-200">
+                            Start
+                        </button>
+                        <button id="stop" class="t-stop text-xs font-semibold py-2.5 rounded-lg border transition-all duration-200">
+                            Stop
+                        </button>
+                    </div>
 
-                    <button
-                        id="bind"
-                        class="w-full text-xs py-2.5 rounded-lg border border-zinc-900 text-cyan-400 bg-black/40 hover:border-zinc-700 transition-colors"
-                    >
-                        Press to bind (F6)
-                    </button>
+                    <div>
+                        <label class="block text-[10px] font-medium t-muted mb-2 uppercase tracking-widest" style="color: var(--text-muted)">Hotkey</label>
+                        <button id="bind" class="t-input w-full text-xs py-2.5 rounded-lg border text-cyan-400 hover:border-zinc-700 transition-colors">
+                            Press to bind (F6)
+                        </button>
+                    </div>
+
                 </div>
             </div>
+            <span class="text-[10px] tracking-widest font-medium" id="version" style="color: var(--text-muted)">V</span>
         </div>
-            <span class="text-[10px] text-zinc-700 tracking-widest font-medium" id="version">V</span>
+    </div>
+
+    <div id="settings-panel" class="t-panel absolute inset-0 z-50 flex flex-col translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="t-topbar w-full flex justify-between items-center px-4 py-3 border-b">
+            <span class="text-xs" style="color: var(--text-muted)">settings</span>
+            <button onclick="toggleSettings()" class="transition-colors" style="color: var(--text-muted)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+
+            <div>
+                <label class="block text-[10px] font-medium mb-3 uppercase tracking-widest" style="color: var(--text-muted)">Theme</label>
+                <div class="grid grid-cols-3 gap-2" id="theme-options">
+                    <button onclick="setTheme('dark')"   data-theme="dark"   class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Dark</button>
+                    <button onclick="setTheme('light')"  data-theme="light"  class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Light</button>
+                    <button onclick="setTheme('red')"    data-theme="red"    class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Red</button>
+                    <button onclick="setTheme('green')"  data-theme="green"  class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Green</button>
+                    <button onclick="setTheme('blue')"   data-theme="blue"   class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Blue</button>
+                    <button onclick="setTheme('purple')" data-theme="purple" class="theme-btn py-2 text-xs rounded-lg border" style="border-color: var(--border); color: var(--text-muted)">Purple</button>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-medium mb-2 uppercase tracking-widest" style="color: var(--text-muted)">Default CPS</label>
+                <input id="default-cps" type="number" min="1"
+                    class="t-input w-full border rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none transition-colors">
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-medium mb-2 uppercase tracking-widest" style="color: var(--text-muted)">Default Button</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="relative block">
+                        <input type="radio" name="default-button" value="left" class="peer sr-only">
+                        <div class="radio-opt text-center text-xs py-2.5 rounded-lg border font-medium cursor-pointer transition-colors">Left</div>
+                    </label>
+                    <label class="relative block">
+                        <input type="radio" name="default-button" value="right" class="peer sr-only">
+                        <div class="radio-opt text-center text-xs py-2.5 rounded-lg border font-medium cursor-pointer transition-colors">Right</div>
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="saveSettings()" class="t-accent w-full text-xs font-semibold py-2.5 rounded-lg transition-all">
+                Save
+            </button>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="settings.js"></script>
 </body>
 </html>

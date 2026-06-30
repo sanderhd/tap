@@ -90,6 +90,22 @@ class Api:
     def get_status(self):
         return running_hotkey
     
+    def save_settings(self, settings):
+        global current_cps, current_button
+        current_cps = int(settings['cps'])
+        current_button = settings['button']
+        path = resouce_path('ui/settings.json')
+        with open(path, 'w') as f:
+            json.dump(settings, f)
+
+    def load_settings(self):
+        try:
+            path = resouce_path('ui/settings.json')
+            with open(path, 'r') as f:
+                return json.load(f)
+        except Exception:
+            return {'cps': 10, 'button': 'left', 'theme': 'dark'}
+    
     def toggle_on_top(self):
         global pinned
         pinned = not pinned
