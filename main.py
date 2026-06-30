@@ -110,4 +110,4 @@ webview.create_window(
     frameless=True
 )
 
-webview.start(debug=True)
+webview.start()
